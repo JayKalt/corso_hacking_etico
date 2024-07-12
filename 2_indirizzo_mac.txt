@@ -1,0 +1,33 @@
+INDIRIZZO MAC{
+	nella rete, l'indirizzo fisico e' un identificatore di 48bit
+	che corrisponde unicamente ad una scheda/dispositivo nella
+	rete.
+	Puo' comunque essere cambiato
+}
+
+
+		ether 00:f4:8d:9a:c0:2f
+
+00:f4:8d
+I primi 3 campi sono i primi 3 otteti. Sono le prime 6 cifre e identificano
+il produttore della rete, l'OUI, organization unique identifyer
+
+
+9a:c0:2f
+I secondi tre sono il NISC, network interface specific controller.
+
+
+
+A COSA SERVE?
+Facciamo una scan dei dispositivi connessi alla nostra rete con Arp
+
+	$ arpscan -i [nome-rete-presa-dal-terminale] --localnet
+	$ arpscan --localnet
+
+Ora vediamo una serie di dispositivi.
+Utilizziamo macchanger per vedere un po' meglio quali potrebbero essere
+gli OUI dei
+
+	$ macchanger -l | grep "[OUI]"
+
+L'obbiettivo e' quello di ottenere piu' info possibili

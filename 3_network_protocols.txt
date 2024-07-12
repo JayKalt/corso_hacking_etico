@@ -1,0 +1,97 @@
+PROTOCOLLI TCP E UDP (USER DATAGRAM PROTOCOL)
+
+TCP	->		Orientato a connessione, usato dalla maggiorparte dei dispositivi per connettersi
+			Il TCP si preoccupa di verificare che i pacchetti inviati arrivino al destinatario
+			ed eventuali errori di connessione.
+			Inoltre invia i pacchetti con lo stesso ordine con cui sono stati inviati:
+
+			esempio:
+
+				[1][2][3] - - - - > [1][2][3]
+
+
+
+UDP	->		Invece questo protocollo non da garanzie che i dati arrivino al destinatario e
+			nemmeno che non ci siano errori.
+			Non invia i pacchetti necessariamente nello stesso ordine:
+
+			esempio:
+
+				[1][2][3] - - - - > [2][1][3]
+
+
+
+PROTOCOLLO TCP - TRASMISSION CONTROL PROTOCOL
+Funziona con il Three hand shake, composto in questo modo:
+
+	SYN -> SYN ACK -> ACK
+
+SYN = synchronize
+ACK = acknowledge
+
+
+Possiamo analizzare la connessione direttamente con wireshark:
+
+1. apriamo wireshark e monitoriamo loopback
+
+	$ wireshark &> /dev/null & disown
+
+2. mettiamoci in ascolto sulla porta 4646
+
+	$ netcat -nlvp 4646
+
+3. connettiamoci al nostro stesso ip sulla porta 4646
+
+	$ netcat [ip] 4646
+
+
+Ora su wireshark possiamo vedere che e' stata effettuato
+l'handsake.
+Nel tentativo di hackerare una macchina dobbiamo vedere quali servizi
+sono presenti, quindi quali porte sono aperte su sui protocolli (tcp/utp)
+
+
+
+NMAP
+Per ottenere informazioni sulle porte aprte e i vari protocolli 
+utilizziamo lo strumento NMAP.
+
+Le porte disponibili sono 65535.
+
+NMAP scannerizza tutte le porte ma le piu' importanti sono quelle
+associate a dei servizi.
+
+
+Le porte comuni su TCP sono:
+port	service		use
+________________________________________________________________
+21		FTP			trasferimento file
+
+22		SSH			solitamente usato per login tramite username 
+					e password
+
+23		TELNET		protocollo di rete per accedere in remoto ad
+					un'altra macchina
+
+25		SMTP		simple mail transfert protocol, usato per l'
+					invio e ricezione delle mail
+
+53		DNS
+
+80		HTTP
+
+443		HTTPS
+
+101		POP3
+
+139		SMB
+445		SMB
+
+143		IMAP
+
+Le porte comuni su TCP sono:
+port	service		use
+________________________________________________________________
+53		DNS
+69		TFTP
+161		SNMP

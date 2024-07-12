@@ -1,0 +1,21 @@
+Here is a list of exercises:
+
+Exercise 1:
+Given IP address: 10.20.30.40/24
+Find the subnet mask, number of hosts, broadcast address, and network ID.
+
+Exercise 2:
+Given IP address: 172.16.5.100/28
+Find the subnet mask, number of hosts, broadcast address, and network ID.
+
+Exercise 3:
+Given IP address: 192.168.1.200/27
+Find the subnet mask, number of hosts, broadcast address, and network ID.
+
+Exercise 4:
+Given IP address: 192.0.2.50/29
+Find the subnet mask, number of hosts, broadcast address, and network ID.
+
+Exercise 5:
+Given IP address: 10.10.10.5/30
+Find the subnet mask, number of hosts, broadcast address, and network ID.

@@ -1,0 +1,24 @@
+IFCONFIG
+HOSTNAME -I
+
+IP{
+	etichetta assegnata ad ogni device connesso ad internet.
+	Non sono altro che dei bit. In particolare sono 32 bit divisi
+	in gruppi da 8 bit. Sono quindi 4 byte.
+  };
+
+
+RAPPRESENTAZIONE BINARIA DI UN IP CON IL COMANDO ECHO:
+
+$ echo “$(echo “obase=2; X”| bc).$(echo “obase=2; Y” | bc)...”
+
+CALCOLO IL NUMERO MASSIMO DI INDIRIZZI:
+
+$ echo "2^32" | bc
+
+
+
+
+Per ovviare alla problematica della popolazione che supera il numero
+di bit disponibili, siamo passati da IPV4 a IPV6 quindi 2^128 bit
+nonche' 6 byte.

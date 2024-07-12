@@ -1,0 +1,58 @@
+MODELLO ISO/OSI
+
+Acronimo per OPEN SYSTEM INTERCONNECTION
+
+Vediamo ora come vengono mandati i pacchetti
+Il modello ISO/OSI si suddivise in 7 strati
+
+					________________
+				   /				\
+7.				  /Application Layer \
+				 /____________________\ 
+6.				/  Presentation Layer  \ 
+			   /________________________\ 
+5.			  /      Session Layer       \ 
+			 /____________________________\ 
+4.			/       Transport Layer        \ 
+		   /________________________________\ 
+3.		  /          Network Layer           \ 
+		 /____________________________________\ 
+2.		/           Data Link Layer            \
+	   /________________________________________\ 
+1.	  /              Physical Layer              \
+	 /____________________________________________\
+
+
+1. PHYSICAL LAYER
+Connesisone fisica tra i dispositivi. Si occupa di trasmissione
+e ricezione dei segnali. Consente in pratica che vengano scambiati
+bit tra dispositivi in modo sicuro e affidabile.
+
+2. DATA LINK LAYER
+Verifica che i pacchetti non abbiano errori, che vengano trasmessi
+nell'ordine corretto, crea la loro suddisvisione in frames per la
+trasmissione.
+
+3. NETWORK LAYER
+Si occupa di fare il routing cioe' l'instradamento dei pacchetti
+dalla sorgente alla destinazione (ip rendering), stabilendo il
+percorso migliore che i pacchetti devono compiere.
+
+Aggiunge queste informazioni al pacchetto e lo incapsula pronto
+per essere spedito.
+
+Gestisce inoltre il problema della congestione di rete, della
+ricezione in ordine corretto e della gestione di tali errori.
+
+
+4. TRANSPORT LAYER
+Avviene il trasporto effettivo dei pacchetti. I protocolli
+utilizzati sono principalmente UDP e TCP
+
+5. SESSION LAYER
+Crea la connessione tra i due host e si occupa dei log e controlli
+di sicurezza. Fa da arbitro durante la connessione tra i due host
+
+6. PRESENTATINO LAYER
+
+7. APPLICATION LAYER

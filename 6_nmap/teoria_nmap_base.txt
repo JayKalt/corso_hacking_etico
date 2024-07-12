@@ -1,0 +1,85 @@
+NMAP: LE BASI
+__________________________________________________________________________
+Come abbiamo visto in precedenza le porte disponibili sono 65536.
+Vediamo ora come utilizzare il tool nmap per ricavare intel utili:
+
+Le porte hanno un grado di importanza diverse.
+
+Per vedre le porte piu' diffuse possiamo usare il comando:
+
+	$ nmap --top-ports [victim_ip]
+	$ nmap --top-ports [number_of_ports (def:1000)] [victim_ip]
+
+
+Se volessimo invece andarci ad analizzare una porta specifica usiamo
+il flag -p:
+
+	$ nmap -p [port] [victim_ip]
+
+
+Se volessimo scansionarle tutte quante allora utilizzeremo il
+flag -p-:
+
+	$ nmap -p- [victim_ip]
+__________________________________________________________________________
+
+
+__________________________________________________________________________
+Una volta terminata la scansione potremmo avere 3 possibili stati
+per ciascuna porta:
+
+	open	-	fileterd	-	closed
+
+
+Inizialmente si punta alle porte aperte. Per vedere solo le porte
+aperte usiamo il flag --opne:
+
+	$ nmap -p- --open [victim_ip]
+
+
+Tuttavia una ricerca simile potrebbe richiede svariati secondi quindi
+si usa il flag -v (verbose) per vedere i risultati in tempo reale:
+
+	$ namp -p- --open -v [victim_ip]
+
+
+Se volessimo velocizzare ancora di piu' la scansione potremmo disabilitare
+l'opzione di DNS resolution che si occupa di trovare il nome di quel
+servizio (puo' impiegare diversi minuti).
+Questo puo' essere fatto utilizzando il flag -n:
+
+	$ nmap -p- --open -v -n [victim_ip]
+
+
+Il parametro -T serve per aumentare la velocita' in generale:
+
+	$ nmap -p- --opne -v -n -T[0-5]
+__________________________________________________________________________
+
+
+__________________________________________________________________________
+Ogni volta che facciamo una scansioen con nmap stiamo facendo un three
+hand shake con l'altro host su una determinata porta.
+
+Vediamo ora come catturare la scansione di nmap ed analizzarla con il tool
+Wireshark questo three hand shake:
+
+Prima di tutto creiamo un file che possa registrare tutto quello che
+produce la sansione. Per questo usiamo il tool tcpdump con l'interfaccia
+di rete che ci interessa:
+
+	$ sudo tcpdump -i [victim_network_interface] -w(rite) -v capture.cap
+
+
+Una volta iniziata la cattura procediamo con la scansione su nmap con il
+flag -sT che viene utilizzato per stabilire una connessione TCP:
+
+	$ nmap -p22 -sT --open -v -n [victim_ip]
+
+
+Infine analizziamo la scan salvata con wireshark
+
+	$ wireshark capture.cap &>/dev/null &disown
+
+Una volta fatto cio' filtriamo con tcp.port == 22 e otteniamo il risultato
+__________________________________________________________________________
