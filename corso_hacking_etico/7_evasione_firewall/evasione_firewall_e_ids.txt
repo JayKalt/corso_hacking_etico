@@ -1,0 +1,102 @@
+EVASIONE FIREWALL E IDS
+
+
+__________________________________________________________________________
+FIREWALL
+In informatica un firewall e' un sistema di sicurezza che si occupa di 
+controllare tutto il traffico di rete che entra ed esce attraverso delle
+regole predeterminate.
+
+
+FRAMMENTAZIONE PACCHETTI
+__________________________________________________________________________
+Le porte filtrate sono proprio filtrate dal firewall.
+Con il parametro -f di NMAP, quando facciamo la scansione e inviamo
+richieste alle porte, frammentiamo (fragment packets) i pacchetti al posto
+di mandarli interi.
+
+	$ nmap -f [victim_ip]
+
+
+A prima vista non c'e' niente di differente ma se lo facciamo su di una
+specifica porta ed andiamo a catturare con TCPDUMP possiamo notare 
+qualcosa di interessante:
+
+	$ tcpdump -i [network_inteface] -w [file.cap] -v
+	$ nmap -p[port_number] -f [victim_ip]
+
+
+In seguito spostandoci su WIRESHARK filtriamo con ip.flags.mf == 1 che ci
+filtra i pacchetti frammentati.
+Possiamo vedere che vengono inviati frammenti e poi assemblati quando 
+sono stati inviati tutti i frammenti.
+Questo si vede infondo ai frammenti mandati come ultima voce.
+
+Il firewall di default aspetta pacchetti interi, non pacchetti frammentati
+e quindi se invii pacchetti interi o non ti fanno vedere la porta o te la
+fanno vedere filtrata.
+
+Se invece inviamo pacchetti frammentati possiamo ingannare il firewall.
+
+Inoltre con il flag --mtu indichiamo il maximum trasmission unit. Se il
+firewall aspetta un determinato mtu ma noi gli inviamo un mtu diverso
+possiamo fregarlo.
+__________________________________________________________________________
+
+
+
+
+IDS
+__________________________________________________________________________
+In informatica un IDS e' un Intrusion Detection System e cioe un tool di
+sicurezza che rileva le intrusioni o gli accessi non atuorizzati.
+
+Con il parametro -D andiamo a fare un IP spoofing con dei decoy IP address
+che rendono piu' difficile far capire al IDS se il traffico sulla rete e'
+legittimo o deve essere bloccato.
+In pratica ci camuffiamo nel traffico legittimo:
+
+	$ sudo tcpdump -i [network_inteface] -w [file.cap] -v
+	$ nmap -p[port_number] -D [decoy1, decoy2...]
+
+	$ wireshark [file.cap]
+
+Se filtriamo poi con tcp.port == [port_number] possiamo notare che vengono
+mandate tutte le richieste. Piu' la lista di IP e' lunga e piu' sara'
+difficile per l'IDS.
+__________________________________________________________________________
+
+
+
+
+PORTA DI INVIO
+__________________________________________________________________________
+Sempre parlando di firewall, quando inviamo un pacchetto di solito la por-
+ta da cui inviamo i pacchetti e' casuale e potrebbe essere che proprio
+quella porta li viene filtrata dal firewall.
+Percio' possiamo decidere di dire noi quale porta deve inviare attraverso
+il paramtero --source-port:
+
+	$ nmap -p[port_number] --source-port[port_number] [victim_ip]
+__________________________________________________________________________
+
+
+
+
+DIMENSIONI PACCHETTO
+__________________________________________________________________________
+Il lenght di un pacchetto e' determinante per raggirare il firewall. Quin-
+di quello che possiamo fare e' falsificare la grandezza del pacchetto to-
+tale.
+Con il parametro --data-lenght possiamo falisficare la dimensione del pac-
+chetto:
+
+	$ namp -p[port_number] --data-lenght [lenght] 
+
+Con questa opzione il pacchetto aumenta la sua dimensione della dimensione
+indicata. Quindi se il pacchetto e' di 50 e gli do lenght di 21 il
+pacchetto finale avra' dimensione 71 cosi' se nella balcklist venivano
+eliminati pacchetti di dimensione <60, il nostro pacchetto passa comunque.
+__________________________________________________________________________
+
+

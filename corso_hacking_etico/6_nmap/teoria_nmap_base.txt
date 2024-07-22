@@ -24,6 +24,7 @@ flag -p-:
 __________________________________________________________________________
 
 
+
 __________________________________________________________________________
 Una volta terminata la scansione potremmo avere 3 possibili stati
 per ciascuna porta:
@@ -57,6 +58,7 @@ Il parametro -T serve per aumentare la velocita' in generale:
 __________________________________________________________________________
 
 
+
 __________________________________________________________________________
 Ogni volta che facciamo una scansioen con nmap stiamo facendo un three
 hand shake con l'altro host su una determinata porta.
@@ -82,4 +84,48 @@ Infine analizziamo la scan salvata con wireshark
 	$ wireshark capture.cap &>/dev/null &disown
 
 Una volta fatto cio' filtriamo con tcp.port == 22 e otteniamo il risultato
+__________________________________________________________________________
+
+
+
+__________________________________________________________________________
+Le connessioni possono essere fatte con etnrambi i protocolli sia UDP che
+TCP. Queste si chiamano Scan Techniques e sono varie:
+
+Per stabilire connessioni con porte TCP usiamo : -sT
+Per stabilire connessioni con porte UDP usiamo : -sU
+__________________________________________________________________________
+
+
+
+__________________________________________________________________________
+Con ARP-SCAN possiamo scansionare la nostra rete locale attraverso il
+comando:
+
+	$ arp-scan -I [network_interface] --localnet
+
+
+Possiamo fare questa stessa cosa con NMPA:
+
+	$ nmap -sn [network_id]
+
+Naturalmente ora sappiamo come calcolarci il netowrk ID che non e' altro
+che la nostra rete locale.
+
+Con il parametro -o possiamo provare a individuare l'O.S. dell'IP.
+Tuttavia non e' raccomandando questo sistema. Esistono altri modi piu'
+rapidi.
+__________________________________________________________________________
+
+
+
+__________________________________________________________________________
+Per poter eseguire una ricerca piu' approfondita possiamo utilizzare due
+flag veramente potenti che sono -sV e -sC. Questo comando utilizza lo scan
+con gli script NSE attivati.
+
+NSE sono una serie di script che vengono utilizzati per verificare se sono
+presenti vulenariabilita' su di una certa porta e di un certo servizio.
+
+	$ nmao -sV -sC [victim_ip] 
 __________________________________________________________________________
